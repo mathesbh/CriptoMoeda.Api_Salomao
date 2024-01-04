@@ -2,7 +2,13 @@
 {
     public class HistoricoNegociacoes : NegociacoesDoDia
     {
-        public int Id { get; set; }
-        public string? SiglaMoeda { get; set; } 
+        public string? Id { get; set; }
+        public string? SiglaMoeda { get; set; }
+        
+        public void AdicionarSiglaMoeda(string siglaMoeda)
+        {
+            Id = Guid.NewGuid().ToString();
+            SiglaMoeda = siglaMoeda;
+        }
     }
 }
