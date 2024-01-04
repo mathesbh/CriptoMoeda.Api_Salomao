@@ -21,6 +21,8 @@ builder.Services.AddMercadoBitcoinAdapter(configuration.
 
 builder.Services.AddAutoMapperCustomizado();
 
+builder.Services.AddDbHistoricoNegociacoesAdapter();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
