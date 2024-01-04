@@ -36,5 +36,23 @@ namespace CriptoMoeda.Api.Controllers
 
             return Ok(mapper.Map<NegociacoesDoDiaGetResult>(resultado));
         }
+
+        /// <summary>
+        ///     Dados das últimas 24 horas de negociações de uma criptomoeda especifica com histórico.
+        /// </summary>
+        /// <param name="siglaMoeda">
+        ///     Sigla da criptomoeda que deseja obter dados.
+        /// </param>
+        [ProducesResponseType(typeof(NegociacoesDoDiaGetResult), 200)]
+        /// <response code="400"> Dados inválidos</response>
+        /// <response code="500">Erro interno.</response>
+        [HttpGet("ObterDadosNegociacoesComHistorico")]
+        public async Task<IActionResult> ObterDadosNegociacoesComHistoricoAsync(string siglaMoeda)
+        {
+            var resultado = await criptoMoedaService
+                .ObterDadosNegociacoesDoDiaComHistoricoAsync(siglaMoeda);
+
+            return Ok(mapper.Map<NegociacoesDoDiaGetResult>(resultado));
+        }
     }
 }
