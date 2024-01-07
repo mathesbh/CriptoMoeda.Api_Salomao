@@ -13,11 +13,13 @@ namespace Application.Tests
     {
         private readonly ICriptoMoedaService criptoMoedaService;
         private readonly Mock<IMercadoBitcoinAdapter> mercadoBitcoinAdapterMock;
+        private readonly Mock<IDbHistoricoNegociacoesAdapter> dbHistoricoNegociacoesAdapterMock;
 
         public CriptoMoedaTests()
         {
             mercadoBitcoinAdapterMock = new Mock<IMercadoBitcoinAdapter>();
-            criptoMoedaService = new CriptoMoedaService(mercadoBitcoinAdapterMock.Object);
+            dbHistoricoNegociacoesAdapterMock = new Mock<IDbHistoricoNegociacoesAdapter>();
+            criptoMoedaService = new CriptoMoedaService(mercadoBitcoinAdapterMock.Object, dbHistoricoNegociacoesAdapterMock.Object);
         }
 
         [TestMethod]
