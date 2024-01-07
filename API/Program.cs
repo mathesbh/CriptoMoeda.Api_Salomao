@@ -21,7 +21,7 @@ builder.Services.AddMercadoBitcoinAdapter(configuration.
 
 builder.Services.AddAutoMapperCustomizado();
 
-builder.Services.AddDbHistoricoNegociacoesAdapter();
+builder.Services.AddDbHistoricoNegociacoesAdapter(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 var app = builder.Build();
 
