@@ -64,5 +64,42 @@ namespace Application.Tests
                 await criptoMoedaService.ObterDadosNegociacoesDoDiaAsync(string.Empty);
             });
         }
+
+        [TestMethod]
+        [Trait(nameof(ICriptoMoedaService.ObterDadosNegociacoesDoDiaComHistoricoAsync), "Sucesso")]
+        public async Task ObterDadosNegociacoesDoDiaAsyncComHistorico_Sucesso()
+        {
+            var siglaCripto = "xpto";
+
+            var retornoAtualizarIntegracao = new NegociacoesDoDia()
+            {
+                DataHora = DateTime.Parse("2010-10-10"),
+                MaiorPreco = 10,
+                MenorPreco = 5,
+                MaiorPrecoOfertado = 11,
+                MenorPrecoOfertado = 4,
+                PrecoUnitario = 10,
+                QuantidadeNegociada = 100
+            };
+
+            mercadoBitcoinAdapterMock
+                .Setup(m => m.ObterDadosNegociacoesDoDiaAsync(It.IsAny<string>()))
+                .Callback<string>(
+                (sigla) =>
+                {
+                    Assert.Equal("xpto", sigla);
+                })
+                .ReturnsAsync(retornoAtualizarIntegracao);
+
+            dbHistoricoNegociacoesAdapterMock.Setup(m => 
+                m.SalvarHistoricoNegociacoesAsync(It.IsAny<NegociacoesDoDia>(), It.IsAny<string>()));
+
+            await criptoMoedaService.ObterDadosNegociacoesDoDiaComHistoricoAsync(siglaCripto);
+
+            mercadoBitcoinAdapterMock.Verify(s => s.
+            ObterDadosNegociacoesDoDiaAsync(It.IsAny<string>()), Times.Once);
+            dbHistoricoNegociacoesAdapterMock.Verify(h => 
+                h.SalvarHistoricoNegociacoesAsync(It.IsAny<NegociacoesDoDia>(), It.IsAny<string>()), Times.Once);
+        }
     }
 }
